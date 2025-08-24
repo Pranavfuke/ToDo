@@ -1,6 +1,10 @@
 from django.shortcuts import render
-from django.http import HttpResponse 
+from ToDoApp.models import Task
 
 def Home(request):
 
-    return render(request , 'home.html')
+    tasks = Task.objects.filter(is_completed=False).order_by('-updated_at')
+    context = {
+        'tasks' : tasks
+    }
+    return render(request , 'home.html' , context)
